@@ -1,6 +1,6 @@
 # HH Goa 2026 — Builder ID Generator (v2)
 
-Two-screen, single-page-after-upload flow. Fully client-side, no backend.
+Two-screen builder flow with optional Vercel server routes for public X sharing.
 
 ## Setup
 
@@ -32,7 +32,10 @@ src/
     themes.js            5 theme color objects (not CSS — read by canvas)
     imageUtils.js        validation, HEIC conversion, crop/pan/zoom math
     canvasGenerator.js   draws + exports the 1200x1200 PNG
-    shareUtils.js         Web Share API with X-intent fallback
+    shareUtils.js         public-share upload + X intent flow
+  ../api/
+    share.js              uploads the generated pass PNG to public Vercel Blob
+    collectible.js        returns per-pass Open Graph / X card metadata
   App.jsx     2-screen state machine
   main.jsx
   styles.css  <- the ONE stylesheet, CSS variables at the top
@@ -65,19 +68,26 @@ src/
 - [ ] Personality: blocked at 3 selections, counter updates
 - [ ] Builder Tag updates when role/traits change; Shuffle cycles to a different valid tag
 - [ ] Theme switch updates live preview immediately
-- [ ] Generate → Download PNG opens at 1200x1200
-- [ ] Share to X: mobile share sheet or download+compose-tab fallback
+- [ ] Generate → Download PNG opens in portrait pass proportions
+- [ ] POST TO X: opens a populated X composer with a public collectible URL
 - [ ] Mobile viewport (375–430px): no horizontal scroll, single column
 - [ ] Desktop (900px+): two-column layout, preview sticky on scroll
 - [ ] Make Another resets fully
 
 ## Deploy
 
-Static build, deploy anywhere:
+For basic static use:
 
 ```bash
 npm run build
 ```
 
-Vercel: `vercel` in the project root (Vite preset, output `dist`).
-Netlify: drag-and-drop `dist/` or connect repo with build command `npm run build`, publish dir `dist`.
+For public X image previews, deploy on Vercel: `vercel` in the project root
+(Vite preset, output `dist`). Create a **Public** Vercel Blob store and connect
+it to the project; Vercel provides `BLOB_READ_WRITE_TOKEN` automatically. If
+using a custom domain, set `PUBLIC_SITE_URL` to that canonical URL.
+
+The exact generated PNG is uploaded once to public Blob storage. `/api/share`
+returns a unique share URL; `/api/collectible` serves dynamic Open Graph and X
+Card metadata pointing at that same PNG. A plain local Vite preview does not
+have public storage, so sharing returns a friendly retryable error there.

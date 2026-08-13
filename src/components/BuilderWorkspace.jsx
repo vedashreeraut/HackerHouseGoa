@@ -85,7 +85,7 @@ export default function BuilderWorkspace({ onLocked }) {
 
   function handleShare() {
     if (!exportBlob) return
-    return shareToX(exportBlob)
+    return shareToX(exportBlob, cardData)
   }
 
   function handleReset() {

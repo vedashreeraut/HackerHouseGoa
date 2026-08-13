@@ -20,7 +20,7 @@ export default function App() {
         <footer className="site-footer"><span className="footer-kiwis">🥝 🥝 🥝</span> CREATED WITH CHAOS & COCONUTS BY <b>THEKIWICREW</b><small>HH GOA 2026 · #FRAMEINGOA</small></footer>
       </div>
       <div className={`screen screen--reveal ${screen === "reveal" ? "screen--active" : ""}`}>
-        {finalId && <FinalReveal id={finalId} onBack={() => setScreen("workspace")} onDownload={() => downloadBuilderCard(finalId.blob)} onShare={() => shareToX(finalId.blob)} />}
+        {finalId && <FinalReveal id={finalId} onBack={() => setScreen("workspace")} onDownload={() => downloadBuilderCard(finalId.blob)} onShare={() => shareToX(finalId.blob, finalId.cardData)} />}
       </div>
     </div>
   )
