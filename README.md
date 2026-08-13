@@ -91,3 +91,17 @@ The exact generated PNG is uploaded once to public Blob storage. `/api/share`
 returns a unique share URL; `/api/collectible` serves dynamic Open Graph and X
 Card metadata pointing at that same PNG. A plain local Vite preview does not
 have public storage, so sharing returns a friendly retryable error there.
+
+### Required Vercel configuration
+
+- `BLOB_READ_WRITE_TOKEN` — added automatically when a **Public** Vercel Blob
+  store is connected to the project.
+- `PUBLIC_SITE_URL` — optional but recommended: the canonical deployed URL,
+  such as `https://your-domain.com`.
+- `VITE_SHARE_API_ORIGIN` — optional local-development variable only. Set it
+  in `.env.local` to the deployed HTTPS app URL, for example
+  `VITE_SHARE_API_ORIGIN=https://your-domain.com`. This lets localhost create
+  real public share links and test the exact X composer text.
+- `VITE_PUBLIC_APP_URL` — required for local composer testing when no share API
+  origin is configured. Set it to the deployed public app URL; the post will
+  always include `VITE_PUBLIC_APP_URL/share/<generated-id>`, never localhost.

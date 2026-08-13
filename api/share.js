@@ -20,7 +20,7 @@ export default async function handler(request, response) {
   }
 
   try {
-    const { image, name, energy } = request.body || {}
+    const { id: requestedId, image, name, energy } = request.body || {}
     if (typeof image !== "string" || !image.startsWith("data:image/png;base64,")) {
       return response.status(400).json({ error: "A generated PNG is required." })
     }
@@ -30,7 +30,7 @@ export default async function handler(request, response) {
       return response.status(400).json({ error: "The collectible image is invalid or too large." })
     }
 
-    const id = randomUUID()
+    const id = typeof requestedId === "string" && /^[0-9a-f-]{36}$/i.test(requestedId) ? requestedId : randomUUID()
     const blob = await put(`collectibles/${id}.png`, bytes, {
       access: "public",
       contentType: "image/png",
