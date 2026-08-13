@@ -1,10 +1,7 @@
 export default function IntroScreen({ onStart }) {
   return (
     <section className="hero">
-      <div className="hero__bg" aria-hidden="true">
-        <span className="hero__leaf hero__leaf--1">❧</span>
-        <span className="hero__leaf hero__leaf--2">❧</span>
-      </div>
+      <div className="hero__bg" aria-hidden="true" />
       <span className="hero__postcard" aria-hidden="true">NO BUGS, JUST BEACHES</span>
 
       <p className="hero__eyebrow">HACKER HOUSE GOA 2026</p>

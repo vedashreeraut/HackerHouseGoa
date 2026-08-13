@@ -11,7 +11,7 @@ export default function App() {
 
   return (
     <div className="app">
-      <div className="goa-world" aria-hidden="true"><i className="sun" /><i className="cloud cloud--one" /><i className="cloud cloud--two" /><i className="cloud cloud--three" /><i className="bird bird--one"><b /></i><i className="bird bird--two"><b /></i><i className="bird bird--three"><b /></i><i className="plane plane--one">✈</i><i className="plane plane--two">✈</i><i className="island island--far" /><i className="island island--near" /><i className="palm palm--left">♠</i><i className="palm palm--right">♠</i><i className="foliage foliage--left">❧</i><i className="foliage foliage--right">❧</i><i className="wave" /></div>
+      <div className="goa-world" aria-hidden="true"><i className="sun" /><i className="cloud cloud--one" /><i className="cloud cloud--two" /><i className="cloud cloud--three" /><i className="bird bird--one"><b /></i><i className="bird bird--two"><b /></i><i className="bird bird--three"><b /></i><i className="plane plane--one">✈</i><i className="plane plane--two">✈</i><i className="island island--far" /><i className="island island--near" /><i className="palm palm--left">♠</i><i className="palm palm--right">♠</i><i className="wave" /></div>
       <div className={`screen screen--intro ${screen === "intro" ? "screen--active" : ""}`}><IntroScreen onStart={() => setScreen("workspace")} /></div>
       <div className={`screen screen--workspace ${screen === "workspace" ? "screen--active" : ""}`}>
         <header className="app-header"><button className="back-button" onClick={() => setScreen("intro")}>← BACK TO GOA</button><span className="app-header__title"><b>HH</b> / GOA <i>2026</i></span><span className="app-header__stamp">THEKIWICREW 🥝</span></header>
