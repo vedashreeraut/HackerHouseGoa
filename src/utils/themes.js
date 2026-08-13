@@ -3,8 +3,8 @@ export const THEMES = [
     id: "blackWhite",
     name: "MONOCHROME RIOT",
     style: "editorial",
-    swatch: ["#0a0a0a", "#f5f0e6", "#ffd23f"],
-    colors: { bg: "#0a0a0a", bg2: "#151515", text: "#f5f0e6", accent: "#ffd23f", accent2: "#ff5da2", frame: "#f5f0e6" },
+    swatch: ["#111010", "#f5f0e6", "#ffd23f"],
+    colors: { bg: "#060505", bg2: "#151515", text: "#ffffff", accent: "#ffd23f", accent2: "#ff5da2", frame: "#f5f0e6" },
     uiClass: "theme-black-white",
   },
   {
@@ -28,7 +28,7 @@ export const THEMES = [
     name: "SUNSET CIRCUIT",
     style: "sunset",
     swatch: ["#ff7a45", "#fdf3e2", "#123322"],
-    colors: { bg: "#ff7a45", bg2: "#ffb26b", text: "#123322", accent: "#fdf3e2", accent2: "#123322", frame: "#123322" },
+    colors: { bg: "#ff7a45", bg2: "#ffb26b", text: "#123322", accent: "#fdf3e2", accent2: "#fdf3e2", frame: "#123322" },
     uiClass: "theme-orange-cream",
   },
   {

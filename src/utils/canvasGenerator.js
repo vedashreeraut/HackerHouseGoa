@@ -49,11 +49,11 @@ function passContent(ctx, data, theme, pass, img, transform) {
   const { colors, style } = theme; const { x,y,w,h }=pass; type(ctx,"HACKER HOUSE",x+40,y+62,"900 28px Arial",colors.text);type(ctx,"GOA, INDIA · 28—31 OCT 2026",x+40,y+92,"800 13px monospace",colors.accent);type(ctx,style === "sunset" ? "BOARDING PASS / HH-26" : style === "nightlife" ? "AFTER HOURS PASS" : "BUILDER FESTIVAL PASS",x+w-40,y+62,"900 13px Arial",colors.text,"right")
   ctx.save();ctx.setLineDash([10,8]);ctx.strokeStyle=colors.accent;ctx.globalAlpha=.55;ctx.beginPath();ctx.moveTo(x+28,y+215);ctx.lineTo(x+w-28,y+215);ctx.stroke();ctx.restore()
   drawPhoto(ctx,img,transform,theme,x+48,y+260,250)
-  type(ctx,"PASSENGER",x+335,y+291,"900 12px Arial",colors.accent2);type(ctx,cap(data.name,22),x+335,y+337,"900 35px Arial Black",colors.bg)
-  type(ctx,"WHAT I BUILD",x+335,y+374,"900 12px Arial",colors.accent2);type(ctx,cap(data.role,30),x+335,y+405,"800 20px Arial",colors.bg)
-  type(ctx,"TOOLBOX",x+335,y+445,"900 12px Arial",colors.accent2);type(ctx,cap(data.stack.join(" · "),42),x+335,y+472,"700 16px Arial",colors.bg)
+  type(ctx,"PASSENGER",x+335,y+291,"900 12px Arial",colors.accent2);type(ctx, cap(data.name,22), x+335, y+337, "900 35px Arial Black", colors.text)
+  type(ctx,"WHAT I BUILD",x+335,y+374,"900 12px Arial",colors.accent2);type(ctx, cap(data.role,30), x+335, y+405, "800 20px Arial", colors.text)
+  type(ctx,"TOOLBOX",x+335,y+445,"900 12px Arial",colors.accent2);type(ctx, cap(data.stack.join(" · "),42), x+335, y+472, "700 16px Arial", colors.text)
   ctx.fillStyle=colors.accent2;rr(ctx,x+45,y+555,w-90,126,style === "poster" ? 28 : 5);ctx.fill();type(ctx,"BUILDER ENERGY",x+66,y+582,"900 12px Arial",colors.text);const words=data.tag.text.replace(/^THE\s/,"").split(" ");const split=Math.ceil(words.length/2);type(ctx,`THE ${words.slice(0,split).join(" ")}`,x+66,y+624,"900 29px Arial Black",colors.text);if(words.length>split)type(ctx,words.slice(split).join(" "),x+66,y+656,"900 29px Arial Black",colors.text)
-  type(ctx,"FLIGHT HH-2026",x+48,y+738,"900 14px monospace",colors.bg);type(ctx,"GATE BUILDER",x+295,y+738,"900 14px monospace",colors.bg);type(ctx,"SEAT GOA",x+510,y+738,"900 14px monospace",colors.bg)
+  type(ctx,"FLIGHT HH-2026",x+48,y+738,"900 14px monospace",colors.text);type(ctx,"GATE BUILDER",x+295,y+738,"900 14px monospace",colors.text);type(ctx,"SEAT GOA",x+510,y+738,"900 14px monospace",colors.text)
   drawQr(ctx,x+48,y+750,125,colors.bg);type(ctx,"SCAN TO BUILD YOUR OWN",x+48,y+892,"800 10px monospace",colors.bg);type(ctx,data.handle || "@FRAMEINGOA",x+w-45,y+805,"900 18px Arial",colors.accent2,"right");type(ctx,"#FRAMEINGOA",x+w-45,y+837,"900 13px Arial",colors.bg,"right");type(ctx,"ADMIT ONE BUILDER · THEKIWICREW",x+48,y+850,"800 11px monospace",colors.bg)
 }
 export function drawBuilderCard(ctx,img,data,theme,transform){
