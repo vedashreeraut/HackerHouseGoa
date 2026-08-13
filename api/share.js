@@ -14,6 +14,16 @@ function clean(value, max = 90) {
 }
 
 export default async function handler(request, response) {
+  const origin = request.headers.origin
+  const localDevelopmentOrigin = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin || "")
+  const publicOrigin = siteUrl(request)
+  if (origin && (localDevelopmentOrigin || origin === publicOrigin)) response.setHeader("Access-Control-Allow-Origin", origin)
+  response.setHeader("Vary", "Origin")
+  if (request.method === "OPTIONS") {
+    response.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS")
+    response.setHeader("Access-Control-Allow-Headers", "Content-Type")
+    return response.status(204).end()
+  }
   if (request.method !== "POST") {
     response.setHeader("Allow", "POST")
     return response.status(405).json({ error: "Method not allowed" })

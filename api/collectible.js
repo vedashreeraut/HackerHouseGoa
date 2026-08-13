@@ -1,5 +1,7 @@
 import { list } from "@vercel/blob"
 
+const HOMEPAGE_REDIRECT_ID = "ce0437fc-693c-404c-b277-549c6aeb94d4"
+
 function escapeHtml(value) {
   return String(value || "").replace(/[&<>'"]/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[character]))
 }
@@ -11,7 +13,28 @@ function siteUrl(request) {
 }
 
 export default async function handler(request, response) {
-  const id = typeof request.query.id === "string" ? request.query.id : ""
+  //const requestUrl = String(request.url || "")
+
+  // TEMPORARY: force this exact Builder ID URL to the homepage.
+  // Check the raw request URL so this works even when Vercel has
+  // rewritten /share/:id to /api/collectible?id=:id.
+  /*if (requestUrl.includes("ce0437fc-693c-404c-b277-549c6aeb94d4")) {
+    response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate")
+    response.setHeader(
+      "Location",
+      "https://hacker-house-goa-chi.vercel.app/"
+    )
+    return response.status(302).end()
+  }
+
+  */
+   const id = typeof request.query.id === "string" ? request.query.id : ""
+
+ if (id === HOMEPAGE_REDIRECT_ID) {
+    response.setHeader("Cache-Control", "no-store")
+    response.setHeader("Location", "/")
+    return response.status(302).end()
+  }
   if (!/^[0-9a-f-]{36}$/i.test(id)) return response.status(404).send("Collectible not found.")
 
   try {
@@ -40,7 +63,7 @@ export default async function handler(request, response) {
 <meta property="og:image" content="${safeImage}"><meta property="og:url" content="${safeCanonical}"><meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${safeTitle}">
 <meta name="twitter:description" content="${safeDescription}"><meta name="twitter:image" content="${safeImage}">
-</head><body><main><h1>${safeTitle}</h1><p>${safeName} · ${safeEnergy}</p><img src="${safeImage}" alt="${safeTitle}"></main></body></html>`)
+</head><body><main><p class="eyebrow">HACKER HOUSE GOA 2026</p><h1>${safeTitle}</h1><p>${safeName} · ${safeEnergy}</p><img src="${safeImage}" alt="${safeTitle}"></main><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#073b2b;color:#fdf6e9;font-family:Arial,sans-serif}main{width:min(92vw,620px);padding:38px 18px;text-align:center}.eyebrow{color:#ff5da2;font-weight:800;letter-spacing:2px;font-size:12px}h1{font-size:clamp(28px,7vw,52px);margin:8px 0}img{display:block;width:100%;margin:28px auto 0;border-radius:18px;box-shadow:12px 14px 0 #ff5da2}</style></body></html>`)
   } catch (error) {
     console.error("Could not load collectible share", error)
     return response.status(500).send("Could not load collectible.")
