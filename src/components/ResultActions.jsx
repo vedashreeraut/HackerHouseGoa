@@ -19,6 +19,7 @@ export default function ResultActions({ canGenerate, onGenerate, onShare, onDown
         </button>
       ) : (
         <>
+          <button className="btn btn--primary btn--full" disabled={!canGenerate} onClick={onGenerate}>UPDATE MY BUILDER PASS →</button>
           <button className="btn btn--primary btn--full" onClick={handleShare}>POST THIS ENERGY TO X →</button>
           <button className="btn btn--secondary btn--full" onClick={onDownload}>SAVE MY COLLECTIBLE PNG</button>
           <button className="btn btn--ghost btn--full" onClick={onReset}>Make Another</button>

@@ -39,6 +39,14 @@ export const THEMES = [
     colors: { bg: "#2b0f4a", bg2: "#4a1a6e", text: "#fdf3ff", accent: "#ff5da2", accent2: "#ffd23f", frame: "#ff5da2" },
     uiClass: "theme-purple-pink",
   },
+  {
+    id: "kiwiCrew",
+    name: "KIWI CREW",
+    style: "kiwi",
+    swatch: ["#6cba42", "#e6f08a", "#fff5d8", "#ff5da2"],
+    colors: { bg: "#264f2b", bg2: "#6cba42", text: "#fff5d8", accent: "#e6f08a", accent2: "#ff5da2", frame: "#e6f08a" },
+    uiClass: "theme-kiwi-crew",
+  },
 ]
 
 export function getTheme(id) {

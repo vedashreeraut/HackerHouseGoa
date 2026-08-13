@@ -24,7 +24,7 @@ const SAMPLE = {
   builderType: "GOA BUILDER",
 }
 
-export default function BuilderWorkspace() {
+export default function BuilderWorkspace({ onLocked }) {
   const [photo, setPhoto] = useState(null) // { img, url } | null
   const [transform, setTransform] = useState(DEFAULT_TRANSFORM)
   const [name, setName] = useState("")
@@ -76,6 +76,7 @@ export default function BuilderWorkspace() {
   async function handleGenerate() {
     const blob = await exportBuilderCard(photo.img, cardData, getTheme(themeId), transform)
     setExportBlob(blob)
+    onLocked?.({ blob, theme, cardData })
   }
 
   function handleDownload() {

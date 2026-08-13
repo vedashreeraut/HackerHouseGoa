@@ -5,10 +5,13 @@ export default function CameraCapture({ onCapture, onCancel }) {
   const streamRef = useRef(null)
   const [error, setError] = useState("")
   const [capturedUrl, setCapturedUrl] = useState(null)
+  const [ready, setReady] = useState(false)
+  const [capturing, setCapturing] = useState(false)
 
   useEffect(() => {
     let cancelled = false
     async function start() {
+      if (!navigator.mediaDevices?.getUserMedia) { setError("This browser isn't feeling camera-ready today. Try uploading a photo instead."); return }
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
         if (cancelled) {
@@ -18,7 +21,7 @@ export default function CameraCapture({ onCapture, onCancel }) {
         streamRef.current = stream
         if (videoRef.current) videoRef.current.srcObject = stream
       } catch {
-        setError("Camera access was blocked. You can upload a photo instead.")
+        setError("THE CAMERA IS SHY. You can upload a photo instead.")
       }
     }
     start()
@@ -28,15 +31,19 @@ export default function CameraCapture({ onCapture, onCancel }) {
     }
   }, [])
 
+  function stopStream() { streamRef.current?.getTracks().forEach((track) => track.stop()); streamRef.current = null }
+
   function handleCapture() {
     const video = videoRef.current
-    if (!video) return
+    if (!video || !ready || capturing) return
+    setCapturing(true)
     const canvas = document.createElement("canvas")
     canvas.width = video.videoWidth
     canvas.height = video.videoHeight
     canvas.getContext("2d").drawImage(video, 0, 0)
     canvas.toBlob((blob) => {
-      if (blob) setCapturedUrl(URL.createObjectURL(blob))
+      if (blob) { setCapturedUrl(URL.createObjectURL(blob)); stopStream() }
+      setCapturing(false)
     }, "image/jpeg", 0.92)
   }
 
@@ -55,8 +62,8 @@ export default function CameraCapture({ onCapture, onCancel }) {
   if (error) {
     return (
       <div className="camera-modal">
-        <p className="form-error">{error}</p>
-        <button type="button" className="btn btn--ghost" onClick={onCancel}>Close</button>
+        <h2>THE CAMERA IS SHY.</h2><p className="form-error">{error}</p>
+        <button type="button" className="btn btn--ghost" onClick={onCancel}>BACK TO GALLERY</button>
       </div>
     )
   }
@@ -65,10 +72,11 @@ export default function CameraCapture({ onCapture, onCancel }) {
     <div className="camera-modal">
       {!capturedUrl ? (
         <>
-          <video ref={videoRef} autoPlay playsInline muted className="camera-modal__video" />
+          <p className="camera-modal__note">{ready ? "SMILE. THE KIWIS ARE WATCHING. 🥝" : "GETTING THE CAMERA READY... 📸"}</p>
+          <video ref={videoRef} autoPlay playsInline muted className="camera-modal__video" onCanPlay={() => setReady(true)} />
           <div className="camera-modal__actions">
             <button type="button" className="btn btn--ghost" onClick={onCancel}>Cancel</button>
-            <button type="button" className="btn btn--primary" onClick={handleCapture}>Capture</button>
+            <button type="button" className="btn btn--primary" disabled={!ready || capturing} onClick={handleCapture}>{capturing ? "CAPTURING..." : "CAPTURE"}</button>
           </div>
         </>
       ) : (
